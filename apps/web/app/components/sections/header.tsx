@@ -15,7 +15,7 @@ export function Header() {
           </div>
           <h1 className="text-xl font-semibold text-gray-900">Newsletter</h1>
         </Link>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
           <Link to="/">
             <Button variant="link">Homepage</Button>
           </Link>
@@ -23,7 +23,12 @@ export function Header() {
             <Button variant="link">Posts</Button>
           </Link>
           {session.data ? (
-            <UserMenu />
+            <>
+              <Link to="/dashboard/posts">
+                <Button variant="secondary">Dashboard</Button>
+              </Link>
+              <UserMenu />
+            </>
           ) : (
             <Link to="/sign-in">
               <Button>Sign in</Button>

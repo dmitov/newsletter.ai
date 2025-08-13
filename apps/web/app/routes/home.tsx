@@ -13,6 +13,7 @@ import { Footer } from "~/components/sections/footer";
 import { Header } from "~/components/sections/header";
 import { NewsletterSignup } from "~/components/sections/newsletter-signup";
 import { authClient } from "~/lib/auth-client";
+import { InteractiveGridPattern } from "@repo/ui/components/interactive-grid-patter";
 
 export function meta() {
   return [
@@ -55,8 +56,10 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Header />
 
-      <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-20 px-6 relative flex items-center">
+      <InteractiveGridPattern  squares={[64,64]}/>
+
+        <div className="max-w-3xl mx-auto text-center z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Share your stories with the world
           </h2>
@@ -101,9 +104,9 @@ export default function Home() {
               <Link
                 key={post.id}
                 to={`/posts/${post.id}`}
-                className="block group"
+                className="block group h-full"
               >
-                <Card className="border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 cursor-pointer">
+                <Card className="border h-full justify-between border-gray-200 hover:border-stone-300 hover:shadow-md transition-all duration-200 cursor-pointer">
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-sm text-gray-500">5 min read</span>
@@ -112,7 +115,7 @@ export default function Home() {
                       {post.title}
                     </CardTitle>
                     <CardDescription className="text-gray-600">
-                      {post.excerpt}
+                      {post.excerpt.slice(0, 100)}...
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-0">

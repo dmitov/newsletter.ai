@@ -1,7 +1,16 @@
 import { prisma } from "@repo/db/client";
 import { Button } from "@repo/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/card";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@repo/ui/components/table";
 import { format } from "@repo/utils/date";
-import { Plus } from "lucide-react";
+import { Edit, Eye, Plus, FileText } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
 import type { Route } from "./+types";
@@ -13,7 +22,6 @@ export function meta() {
     { name: "description", content: "Manage your newsletter posts" },
   ];
 }
-
 
 export async function loader({ request }: Route.LoaderArgs) {
   const user = await authenticated(request.headers);
@@ -33,10 +41,23 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function PostsIndex() {
   const { posts } = useLoaderData<typeof loader>();
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "published":
+        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 border-green-200 dark:border-green-800";
+      case "draft":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800";
+      case "scheduled":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       <DashboardHeader
-        title="Dashboard"
+        title="Posts"
         backLink={{ title: "Back to website", href: "/" }}
       >
         <Link to="/dashboard/posts/create">
@@ -47,101 +68,112 @@ export default function PostsIndex() {
         </Link>
       </DashboardHeader>
 
-      <div className="p-6 container mx-auto">
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow">
-          {posts.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-slate-700">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+      <div className="p-6 container mx-auto max-w-7xl">
+        <Card>
+          <CardHeader>
+            <CardTitle >
+              Your Posts
+            </CardTitle>
+            <CardDescription>
+              Manage your posts and their status.
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent>
+            {posts.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-b border-slate-200 dark:border-slate-700">
+                    <TableHead className="font-semibold text-slate-700 dark:text-slate-300">
                       Title
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    </TableHead>
+                    <TableHead className="font-semibold text-slate-700 dark:text-slate-300">
                       Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      Published
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    </TableHead>
+                    <TableHead className="font-semibold text-slate-700 dark:text-slate-300">
+                      Published Date
+                    </TableHead>
+                    <TableHead className="font-semibold text-slate-700 dark:text-slate-300 text-center">
                       Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-600">
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   {posts.map((post) => (
-                    <tr
+                    <TableRow 
                       key={post.id}
-                      className="hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                      className="hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors"
                     >
-                      <td className="px-6 py-4">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">
-                            {post.title}
+                      <TableCell className="py-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+                            <FileText className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-slate-900 dark:text-slate-100">
+                              {post.title}
+                            </div>
+                           
                           </div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4">
+                      </TableCell>
+                      <TableCell>
                         <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            post.status === "published"
-                              ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                              : post.status === "draft"
-                                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                                : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                          }`}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(post.status)}`}
                         >
-                          {post.status}
+                          {post.status.charAt(0).toUpperCase() + post.status.slice(1)}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                      </TableCell>
+                      <TableCell className="text-slate-600 dark:text-slate-400">
                         {post.publishedAt
                           ? format(post.publishedAt, "MMM d, yyyy")
-                          : "-"}
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium">
-                        <div className="flex space-x-2">
+                          : "Not published"}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end space-x-2">
                           <Link
                             to={`/dashboard/posts/${post.id}/edit`}
-                            className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
+                            className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-colors"
                           >
+                            <Edit className="w-4 h-4 mr-1.5" />
                             Edit
                           </Link>
                           {post.status === "published" && (
                             <Link
                               to={`/posts/${post.id}`}
-                              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300"
+                              className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-colors"
                             >
+                              <Eye className="w-4 h-4 mr-1.5" />
                               View
                             </Link>
                           )}
                         </div>
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Plus className="w-8 h-8 text-gray-400" />
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="text-center py-16 px-6">
+                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <FileText className="w-10 h-10 text-slate-400 dark:text-slate-500" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                  No posts yet
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md mx-auto">
+                  Start building your newsletter by creating your first post. Share your thoughts, insights, and stories with your audience.
+                </p>
+                <Link to="/dashboard/posts/create">
+                  <Button size="lg" className="px-8">
+                    <Plus className="w-5 h-5 mr-2" />
+                    Create Your First Post
+                  </Button>
+                </Link>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                No posts yet
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Get started by creating your first post.
-              </p>
-              <Link to="/dashboard/posts/create">
-                <Button variant="outline">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create Post
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ export function NewsletterSignup() {
               type="email"
               name="email"
               placeholder="Enter your email address"
+              className="bg-white"
             />
             <Button type="submit" disabled={fetcher.state !== "idle"}>
               {fetcher.state !== "idle" ? "Subscribing..." : "Subscribe"}
