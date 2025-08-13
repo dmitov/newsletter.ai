@@ -1,135 +1,88 @@
-# Turborepo starter
+# Newsletter.ai
 
-This Turborepo starter is maintained by the Turborepo core team.
+A take-home assignment for a job interview project. 
 
-## Using this example
+## How to run it
+1. Run `cp .env.example .env` and fill-in the environment variables
+2. Run `pnpm install`
+3. Run `pnpm run dev`
 
-Run the following command:
+## Product requirements
+-[x] Ability to author new posts
+-[x] Ability to view published posts in read-only mode
+-[x] Ability to sign up for the newsletter
+-[x] Ability to retrieve blog posts from an API including content
+-[x] Ability to schedule posts to be published at a later date
+-[x] Send an email to subscribers upon publishing a post
 
-```sh
-npx create-turbo@latest
-```
+## Demo
+The live demo is available here: [https://newsletter-ai-web.vercel.app/](https://newsletter-ai-web.vercel.app/)
 
-## What's inside?
+## Project structure
+- `./apps/web` – React Router v7 app responsible for the front-end website and API
+- `./packages/auth` – BetterAuth configuration
+- `./packages/db` – Prisma setup and database client
+- `./packages/email` – React Email & Resend configuration
+- `./packages/jobs` – Trigger.dev job definitions
+- `./packages/ui` – ShadCN UI component library
+- `./packages/utils` – Common utilities (e.g., date-fns)
+- `./packages/validators` – Zod validators for create/update operations
 
-This Turborepo includes the following packages/apps:
+## Time taken
+I completed all required features within the allotted 4 hours. To save time, I reused some pre-written code from [Midday](https://github.com/midday-ai/midday) and my personal projects, including the `auth`, `email`, and `jobs` packages.
 
-### Apps and Packages
+Most of the UI was "vibe-coded" during the initial build. However, I wasn’t fully satisfied with the design, so I invested an additional 2 hours refining the visuals and deploying the application to Vercel.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## Technology stack
+Answer to the question "What were some of the reasons you chose the technology stack that you did?"
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- **[Turborepo](https://turbo.build/repo)** – Chosen for its simplicity and familiarity. While this project doesn’t strictly require a monorepo, I’ve worked extensively with them and find the structure beneficial for scalability and tooling consistency. I drew inspiration from Midday.ai and create-t3-turbo for the overall setup and developer experience.
 
-### Utilities
+- **[React Router v7](https://reactrouter.com/)** – Picked as an “unknown” to push myself. I’ve used React Router before, but not since the Remix merge. This was a chance to explore the updated API and new capabilities while still leveraging a router I understand conceptually.
 
-This Turborepo has some additional tools already setup for you:
+- **[Prisma](https://www.prisma.io/)** – My go-to ORM. I’ve used it for 3+ years in personal and professional projects, and despite exploring alternatives, Prisma’s developer experience, type safety, and ecosystem keep me coming back. I’m comfortable and efficient with it—and still excited about its evolution.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- **[ShadCN UI](https://ui.shadcn.com/)** – My preferred UI component library. It offers accessible, themeable, and highly composable components out of the box, enabling me to move quickly without sacrificing design quality.
 
-### Build
+- **[TanStack Forms](https://tanstack.com/forms)** – Another “unknown” for me. I’m already a fan of TanStack Router, Query, and Table, so this was my first hands-on experience with their form management. I wanted to test how it compares to my usual choices.
 
-To build all apps and packages, run the following command:
+- **[BetterAuth](https://better-auth.com/)** – Chosen for its minimal setup and modern approach to authentication. I was able to get secure auth running in minutes, making it a clear win for rapid development. I’d gladly use it again in future projects.
 
-```
-cd my-turborepo
+- **[React Email](https://react.email/)** – My go-to for emails in React. It enables a component-driven approach to email design, making it easy to maintain consistency and preview layouts during development.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+- **[Trigger.dev](https://trigger.dev/)** – My preferred background jobs tool. Its developer-friendly API and integrations make scheduling, running, and monitoring jobs a painless experience.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+## Trade-offs
+> What were some of the trade-offs you made when building this application? Why were these acceptable?
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+- **UI/UX polish** – I didn’t spend much time fine-tuning the UI/UX. Most of it was “vibe-coded” in Cursor with ShadCN UI doing the heavy lifting to make things look decent out of the box. The trade-off here was intentional: I prioritized getting the tech stack and core features in place over design.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+- **API architecture** – Ideally, I would’ve created a separate API app using Hono. However, given the time constraints, I opted to use React Router API routes, which are quick, reliable, and fit well for this scope.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## Future improvements
+> Given more time, what improvements or optimizations would you add? When would you add them?
 
-### Develop
+- **Markdown editor** – A core part of the authoring experience that would make writing posts far better.
+    - When: Early in post-MVP development, before launch if possible.
+- **API authentication** – A great technical challenge and essential for production readiness.
+    - When: Just before product launch.
 
-To develop all apps and packages, run the following command:
+- **UI/UX improvements** – Strong design builds trust and retention. I’d revisit layout, spacing, accessibility, and overall visual hierarchy. 
+    - When: Post-launch, after gathering initial user feedback.
 
-```
-cd my-turborepo
+- **More features features** – (eg. Image support)
+    - When: In parallel with UI/UX improvements.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+- **Dedicated API app with Hono** – While RR API routes are fine now, I’d eventually split into a dedicated API service for scalability and separation of concerns, treating React Router more like a BFF.
+    - When: Once the API surface grows beyond a certain threshold.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+# Deployment
+>How would you deploy the application in a production-ready way?
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+The project is currently deployed on Vercel, which is great for rapid setup and initial testing. However, at scale, both Vercel and Trigger.dev can become costly.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+For a more cost-effective, production-ready alternative, I’d recommend self-hosting the entire stack using a provider like [Hetzner](https://www.hetzner.com/) and managing deployments with tools such as [Coolify](https://coolify.io/). This approach offers greater control over infrastructure, predictable costs, and flexibility for scaling.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
 
-### Remote Caching
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
