@@ -1,3 +1,4 @@
+import { prisma } from "@repo/db/client";
 import { Button } from "@repo/ui/components/button";
 import {
   Card,
@@ -7,7 +8,7 @@ import {
   CardTitle,
 } from "@repo/ui/components/card";
 import { format } from "@repo/utils/date";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { Footer } from "~/components/sections/footer";
 import { Header } from "~/components/sections/header";
 import { NewsletterSignup } from "~/components/sections/newsletter-signup";
@@ -24,23 +25,26 @@ export function meta() {
   ];
 }
 
+export async function loader() {
+  const posts = await prisma.post.findMany({
+    where: {
+      publishedAt: {
+        lte: new Date(),
+      },
+    },
+    orderBy: {
+      publishedAt: "desc",
+    },
+    include: {
+      user: true,
+    },
+  });
+  return { posts };
+}
+
 export default function Home() {
   const session = authClient.useSession();
-
-  const posts = [
-    {
-      id: "1",
-      title: "Post 1",
-      excerpt: "Excerpt 1",
-      publishedAt: new Date(),
-    },
-    {
-      id: "2",
-      title: "Post 2",
-      excerpt: "Excerpt 2",
-      publishedAt: new Date(),
-    },
-  ];
+  const { posts } = useLoaderData<typeof loader>();
 
   return (
     <div className="min-h-screen bg-white">
@@ -109,7 +113,7 @@ export default function Home() {
                   <CardContent className="pt-0">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">
-                        {format(post.publishedAt, "MMM d, yyyy")}
+                        {format(post.publishedAt ?? new Date(), "MMM d, yyyy")}
                       </span>
                       <div className="flex items-center text-sm text-gray-500 group-hover:text-gray-700">
                         Read More →

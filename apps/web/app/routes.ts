@@ -1,4 +1,9 @@
-import { index, prefix, type RouteConfig, route } from "@react-router/dev/routes";
+import {
+  index,
+  prefix,
+  type RouteConfig,
+  route,
+} from "@react-router/dev/routes";
 
 export default [
   index("routes/home.tsx"),
@@ -13,10 +18,8 @@ export default [
     index("routes/dashboard/index.tsx"),
     route("posts", "routes/dashboard/posts/index.tsx"),
     route("posts/create", "routes/dashboard/posts/create.tsx"),
-    route("posts/edit/:id", "routes/dashboard/posts/edit/$id.tsx"),
+    route("posts/:id/edit", "routes/dashboard/posts/edit/$id.tsx"),
   ]),
 
-  ...prefix("api", [
-    route("auth/*", "routes/api/auth.ts"),
-  ]),
+  ...prefix("api", [route("auth/*", "routes/api/auth.ts")]),
 ] satisfies RouteConfig;

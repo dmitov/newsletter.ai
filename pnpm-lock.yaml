@@ -9,6 +9,9 @@ catalogs:
     '@t3-oss/env-core':
       specifier: ^0.13.8
       version: 0.13.8
+    '@tanstack/react-form':
+      specifier: ^1.19.1
+      version: 1.19.1
     '@types/node':
       specifier: ^22.15.3
       version: 22.17.1
@@ -79,9 +82,15 @@ importers:
       '@repo/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@repo/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
       '@t3-oss/env-core':
         specifier: 'catalog:'
         version: 0.13.8(typescript@5.9.2)(zod@4.0.17)
+      '@tanstack/react-form':
+        specifier: 'catalog:'
+        version: 1.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       isbot:
         specifier: ^5
         version: 5.1.29
@@ -248,7 +257,7 @@ importers:
         specifier: ^1.2.6
         version: 1.2.7(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tanstack/react-form':
-        specifier: ^1.19.1
+        specifier: 'catalog:'
         version: 1.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tanstack/store':
         specifier: ^0.7.2
@@ -309,6 +318,22 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.17.1
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.2
+
+  packages/validators:
+    dependencies:
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../utils
+      zod:
+        specifier: 'catalog:'
+        version: 4.0.17
+    devDependencies:
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
       typescript:
         specifier: 'catalog:'
         version: 5.9.2

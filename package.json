@@ -4,6 +4,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "db:migrate": "pnpm --filter @repo/db run migrate",
+    "db:studio": "pnpm --filter @repo/db run studio",
     "format-and-lint": "biome check .",
     "format-and-lint:fix": "biome check . --write"
   },

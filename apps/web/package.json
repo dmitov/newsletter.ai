@@ -18,6 +18,8 @@
     "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
+    "@repo/validators": "workspace:*",
+    "@tanstack/react-form": "catalog:",
     "@t3-oss/env-core": "catalog:",
     "jiti": "^2.5.1",
     "isbot": "^5",
