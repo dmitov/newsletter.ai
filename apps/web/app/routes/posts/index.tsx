@@ -31,7 +31,12 @@ export async function loader() {
       publishedAt: "desc",
     },
     include: {
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
   });
 

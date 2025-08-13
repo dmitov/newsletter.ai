@@ -23,7 +23,12 @@ export async function loader({ params }: { params: { id: string } }) {
       },
     },
     include: {
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
   });
 

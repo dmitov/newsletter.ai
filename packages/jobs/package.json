@@ -1,0 +1,41 @@
+{
+  "name": "@repo/jobs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./env": "./env.ts",
+    "./tasks/post/*": "./src/tasks/post/*.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "pnpm with-env pnpm dlx trigger.dev@latest dev",
+    "clean": "git clean -xdf .cache .turbo .trigger node_modules",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@repo/db": "workspace:*",
+    "@repo/email": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
+    "@trigger.dev/sdk": "^3.3.17",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@trigger.dev/build": "^3.3.17",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "@t3-oss/env-core": "catalog:",
+    "dotenv-cli": "catalog:",
+    "trigger.dev": "^3.3.17",
+    "typescript": "catalog:"
+  }
+}

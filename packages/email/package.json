@@ -1,0 +1,43 @@
+{
+  "name": "@repo/email",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "exports": {
+    "./env": "./env.ts",
+    "./emails/*": "./emails/*.tsx",
+    "./locales": "./locales/index.ts",
+    "./render": "./render.ts",
+    "./client": "./client.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "dev": "email dev -p 3003",
+    "build": "email build",
+    "start": "email start"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.5.0",
+    "@react-email/render": "^1.2.0",
+    "@react-email/tailwind": "^1.2.2",
+    "@repo/ui": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "@t3-oss/env-core": "catalog:",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
+    "react-email": "^4.2.8",
+    "resend": "^6.0.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@react-email/preview-server": "4.2.8",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "typescript": "catalog:"
+  }
+}

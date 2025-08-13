@@ -1,0 +1,10 @@
+{
+  "extends": "@repo/tsconfig/internal-package.json",
+  "include": ["emails", "components"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
+}

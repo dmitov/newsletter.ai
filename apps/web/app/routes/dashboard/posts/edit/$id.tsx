@@ -15,6 +15,9 @@ import { userContext } from "~/context";
 import { authMiddleware } from "~/lib/auth-middleware";
 import type { Route } from "./+types/$id";
 
+import {tasks} from '@repo/jobs';
+import type { broadcastNewPost } from "@repo/jobs/tasks/post/broadcast";
+
 export function meta() {
   return [
     { title: "Posts - Newsletter Dashboard" },
@@ -89,7 +92,7 @@ export async function action({ request, params, context }: Route.ActionArgs) {
       throw new Error("Post not found");
     }
 
-    await prisma.post.update({
+    const updatedPost = await prisma.post.update({
       where: { id: postId },
       data: {
         title: validatedData.title,
@@ -105,11 +108,19 @@ export async function action({ request, params, context }: Route.ActionArgs) {
           validatedData.scheduling === "schedule-later"
             ? new Date(validatedData.scheduledAt || "")
             : validatedData.scheduling === "publish-now"
-              ? new Date()
+              ? existingPost.publishedAt ?? new Date()
               : null,
         updatedAt: new Date(),
       },
     });
+
+    
+    if (validatedData.scheduling === "publish-now" && updatedPost.publishedAt !== existingPost.publishedAt) {
+      await tasks.trigger<typeof broadcastNewPost>(
+        "broadcast-new-post",
+        { postId: updatedPost.id },
+      );
+    }
   } catch (e) {
     if (e instanceof ServerValidateError) {
       return e.formState;
@@ -165,7 +176,7 @@ export default function PostsEdit() {
                       ? "Update and schedule"
                       : scheduling === "draft"
                         ? "Save draft"
-                        : "Update and publish"}
+                        : "Update published post"}
                 </Button>
               )}
             </form.Subscribe>

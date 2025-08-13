@@ -93,7 +93,9 @@ export default function PostsIndex() {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        {post.publishedAt ? format(post.publishedAt, "MMM d, yyyy") : "-"}
+                        {post.publishedAt
+                          ? format(post.publishedAt, "MMM d, yyyy")
+                          : "-"}
                       </td>
                       <td className="px-6 py-4 text-sm font-medium">
                         <div className="flex space-x-2">
@@ -103,12 +105,14 @@ export default function PostsIndex() {
                           >
                             Edit
                           </Link>
-                          <Link
-                            to={`/posts/${post.id}`}
-                            className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300"
-                          >
-                            View
-                          </Link>
+                          {post.status === "published" && (
+                            <Link
+                              to={`/posts/${post.id}`}
+                              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300"
+                            >
+                              View
+                            </Link>
+                          )}
                         </div>
                       </td>
                     </tr>
