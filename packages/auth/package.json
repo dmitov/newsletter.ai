@@ -1,0 +1,37 @@
+{
+  "name": "@repo/auth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./react": "./src/react.ts",
+    "./env": "./env.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "generate": "pnpm with-env pnpx @better-auth/cli generate --config src/index.ts --output ../db/prisma/schema.prisma",
+    "migrate": "pnpm with-env pnpx @better-auth/cli migrate --config src/index.ts --output ../db/prisma/schema.prisma",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@repo/db": "workspace:*",
+    "@t3-oss/env-core": "catalog:",
+    "better-auth": "1.3.4",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@better-auth/cli": "1.3.4",
+    "@repo/tsconfig": "workspace:*",
+    "@types/react": "catalog:react19",
+    "@types/node": "catalog:",
+    "dotenv-cli": "catalog:",
+    "typescript": "catalog:"
+  }
+}

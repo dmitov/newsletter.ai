@@ -1,0 +1,34 @@
+{
+  "name": "@repo/db",
+  "version": "0.1.0",
+  "private": true,
+  "module": true,
+  "exports": {
+    "./env": "./env.ts",
+    "./client": "./src/client.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf generated .cache .turbo dist node_modules",
+    "build": "pnpm generate",
+    "dev": "pnpm generate",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "generate": "pnpm with-env prisma generate --no-engine --schema=./prisma/schema.prisma",
+    "migrate": "pnpm with-env prisma migrate dev --schema=./prisma/schema.prisma",
+    "studio": "pnpm with-env prisma studio --schema=./prisma/schema.prisma",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@prisma/client": "catalog:prisma",
+    "@t3-oss/env-core": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "dotenv-cli": "catalog:",
+    "prisma": "catalog:prisma",
+    "typescript": "catalog:"
+  }
+}
