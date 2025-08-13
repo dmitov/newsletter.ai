@@ -8,12 +8,12 @@ A take-home assignment for a job interview project.
 3. Run `pnpm run dev`
 
 ## Product requirements
--[x] Ability to author new posts
--[x] Ability to view published posts in read-only mode
--[x] Ability to sign up for the newsletter
--[x] Ability to retrieve blog posts from an API including content
--[x] Ability to schedule posts to be published at a later date
--[x] Send an email to subscribers upon publishing a post
+- [x] Ability to author new posts
+- [x] Ability to view published posts in read-only mode
+- [x] Ability to sign up for the newsletter
+- [x] Ability to retrieve blog posts from an API including content
+- [x] Ability to schedule posts to be published at a later date
+- [x] Send an email to subscribers upon publishing a post
 
 ## Demo
 The live demo is available here: [https://newsletter-ai-web.vercel.app/](https://newsletter-ai-web.vercel.app/)
