@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@repo/ui/lib/utils";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 
 /**
  * InteractiveGridPattern is a component that renders a grid pattern with interactive squares.
@@ -52,7 +53,7 @@ export function InteractiveGridPattern({
         const x = (index % horizontal) * width;
         const y = Math.floor(index / horizontal) * height;
         return (
-            // biome-ignore lint/a11y/noStaticElementInteractions: should be okay
+          // biome-ignore lint/a11y/noStaticElementInteractions: should be okay
           <rect
             key={`${x}-${y}`}
             x={x}

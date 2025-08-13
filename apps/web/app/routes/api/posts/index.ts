@@ -49,7 +49,7 @@ export async function loader() {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("Error fetching published posts:", error);
@@ -65,7 +65,7 @@ export async function loader() {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   }
 }

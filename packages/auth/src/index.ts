@@ -1,8 +1,8 @@
 import { prisma } from "@repo/db/client";
+import { getAppUrl } from "@repo/utils/envs";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { authEnv } from "../env";
-import { getAppUrl } from "@repo/utils/envs";
 
 const env = authEnv();
 

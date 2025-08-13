@@ -1,4 +1,3 @@
-import { getAppUrl } from "@repo/utils/envs";
 import {
   Body,
   Container,
@@ -7,6 +6,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { getAppUrl } from "@repo/utils/envs";
 import { Footer } from "../components/footer";
 import {
   Button,
@@ -32,16 +32,14 @@ export const NewPostEmail = ({
     author: "Jane Doe",
     title: "New Post",
     url: "https://example.com/post/123",
-  }
+  },
 }: Props) => {
   const postLink = `${baseAppUrl}/posts/${post.id}`;
   const themeClasses = getEmailThemeClasses();
   const lightStyles = getEmailInlineStyles("light");
 
   return (
-    <EmailThemeProvider
-      preview={<Preview>New post for you!</Preview>}
-    >
+    <EmailThemeProvider preview={<Preview>New post for you!</Preview>}>
       <Body
         className={`my-auto mx-auto font-sans ${themeClasses.body}`}
         style={lightStyles.body}
@@ -65,7 +63,8 @@ export const NewPostEmail = ({
             className={`text-[14px] leading-[24px] ${themeClasses.text}`}
             style={{ color: lightStyles.text.color }}
           >
-            {post.author} has published a new post: <strong>{post.title}</strong>.
+            {post.author} has published a new post:{" "}
+            <strong>{post.title}</strong>.
           </Text>
           <Section className="mb-[42px] mt-[32px] text-center">
             <Button href={postLink}>Read now</Button>

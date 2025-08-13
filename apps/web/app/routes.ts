@@ -24,7 +24,7 @@ export default [
   ...prefix("api", [
     route("posts", "routes/api/posts/index.ts"),
     route("posts/:id", "routes/api/posts/$id.ts"),
-    
+
     route("auth/*", "routes/api/auth.ts"),
     route("subscribe", "routes/api/subscribe.ts"),
   ]),

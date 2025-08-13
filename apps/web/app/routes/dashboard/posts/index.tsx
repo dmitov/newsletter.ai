@@ -1,20 +1,26 @@
 import { prisma } from "@repo/db/client";
 import { Button } from "@repo/ui/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/card";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@repo/ui/components/table";
 import { format } from "@repo/utils/date";
-import { Edit, Eye, Plus, FileText } from "lucide-react";
+import { Edit, Eye, FileText, Plus } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
-import type { Route } from "./+types";
 import { authenticated } from "~/lib/auth-server";
+import type { Route } from "./+types";
 
 export function meta() {
   return [
@@ -71,14 +77,12 @@ export default function PostsIndex() {
       <div className="p-6 container mx-auto max-w-7xl">
         <Card>
           <CardHeader>
-            <CardTitle >
-              Your Posts
-            </CardTitle>
+            <CardTitle>Your Posts</CardTitle>
             <CardDescription>
               Manage your posts and their status.
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent>
             {posts.length > 0 ? (
               <Table>
@@ -100,7 +104,7 @@ export default function PostsIndex() {
                 </TableHeader>
                 <TableBody>
                   {posts.map((post) => (
-                    <TableRow 
+                    <TableRow
                       key={post.id}
                       className="hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors"
                     >
@@ -113,7 +117,6 @@ export default function PostsIndex() {
                             <div className="font-medium text-slate-900 dark:text-slate-100">
                               {post.title}
                             </div>
-                           
                           </div>
                         </div>
                       </TableCell>
@@ -121,7 +124,8 @@ export default function PostsIndex() {
                         <span
                           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(post.status)}`}
                         >
-                          {post.status.charAt(0).toUpperCase() + post.status.slice(1)}
+                          {post.status.charAt(0).toUpperCase() +
+                            post.status.slice(1)}
                         </span>
                       </TableCell>
                       <TableCell className="text-slate-600 dark:text-slate-400">
@@ -162,7 +166,8 @@ export default function PostsIndex() {
                   No posts yet
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md mx-auto">
-                  Start building your newsletter by creating your first post. Share your thoughts, insights, and stories with your audience.
+                  Start building your newsletter by creating your first post.
+                  Share your thoughts, insights, and stories with your audience.
                 </p>
                 <Link to="/dashboard/posts/create">
                   <Button size="lg" className="px-8">

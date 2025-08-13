@@ -25,11 +25,9 @@ export const formOpts = formOptions({
 export const PostForm = withForm({
   ...formOpts,
   render: ({ form }) => {
-    
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="col-span-2 flex flex-col space-y-8">
-
           <Card>
             <CardHeader>
               <CardTitle>Post Details</CardTitle>

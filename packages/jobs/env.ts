@@ -1,6 +1,6 @@
+import { dbEnv } from "@repo/db/env";
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod/v4";
-import { dbEnv } from "@repo/db/env";
 
 export function jobsEnv() {
   return createEnv({

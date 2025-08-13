@@ -1,12 +1,11 @@
 import { prisma } from "@repo/db/client";
-import { render } from "@repo/email/render";
+import { resend } from "@repo/email/client";
 import NewPostEmail from "@repo/email/emails/new-post";
+import { emailEnv } from "@repo/email/env";
+import { render } from "@repo/email/render";
 import { getAppUrl } from "@repo/utils/envs";
 import { logger, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod/v3";
-
-import { emailEnv } from "@repo/email/env";
-import { resend } from "@repo/email/client";
 
 export const broadcastNewPost = schemaTask({
   id: "broadcast-new-post",
@@ -31,7 +30,6 @@ export const broadcastNewPost = schemaTask({
       logger.error("Post not found");
       throw new Error("Post not found");
     }
-    
 
     const broadcast = await resend.broadcasts.create({
       audienceId: emailEnv().RESEND_AUDIENCE_ID,
@@ -48,7 +46,6 @@ export const broadcastNewPost = schemaTask({
         />,
       ),
     });
-
 
     if (!broadcast.data) {
       logger.error("New post email failed to send", {

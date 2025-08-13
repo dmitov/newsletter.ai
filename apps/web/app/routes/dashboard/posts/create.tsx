@@ -11,8 +11,8 @@ import {
 import { Form, redirect, useActionData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
 import { formOpts, PostForm } from "~/components/forms/post-form";
-import type { Route } from "./+types";
 import { authenticated } from "~/lib/auth-server";
+import type { Route } from "./+types";
 
 export function meta() {
   return [

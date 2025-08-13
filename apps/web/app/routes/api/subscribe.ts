@@ -14,16 +14,21 @@ export async function action({ request }: ActionFunctionArgs) {
     });
 
     return new Response(
-      JSON.stringify({ message: "Subscribed to newsletter", status: "success" }),
+      JSON.stringify({
+        message: "Subscribed to newsletter",
+        status: "success",
+      }),
       {
         status: 200,
       },
     );
-
   } catch (error) {
     console.error(error);
     return new Response(
-      JSON.stringify({ message: "Failed to subscribe to newsletter", status: "error" }),
+      JSON.stringify({
+        message: "Failed to subscribe to newsletter",
+        status: "error",
+      }),
       {
         status: 500,
       },

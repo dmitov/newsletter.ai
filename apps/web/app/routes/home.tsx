@@ -7,13 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
+import { InteractiveGridPattern } from "@repo/ui/components/interactive-grid-patter";
 import { format } from "@repo/utils/date";
 import { Link, useLoaderData } from "react-router";
 import { Footer } from "~/components/sections/footer";
 import { Header } from "~/components/sections/header";
 import { NewsletterSignup } from "~/components/sections/newsletter-signup";
 import { authClient } from "~/lib/auth-client";
-import { InteractiveGridPattern } from "@repo/ui/components/interactive-grid-patter";
 
 export function meta() {
   return [
@@ -57,7 +57,7 @@ export default function Home() {
       <Header />
 
       <section className="py-20 px-6 relative flex items-center">
-      <InteractiveGridPattern  squares={[64,64]}/>
+        <InteractiveGridPattern squares={[64, 64]} />
 
         <div className="max-w-3xl mx-auto text-center z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">

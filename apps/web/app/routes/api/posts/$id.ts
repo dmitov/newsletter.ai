@@ -18,7 +18,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
     }
 
@@ -49,7 +49,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
     }
 
@@ -65,7 +65,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("Error fetching post:", error);
@@ -81,7 +81,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   }
 }

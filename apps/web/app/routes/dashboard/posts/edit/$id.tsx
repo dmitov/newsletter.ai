@@ -1,4 +1,6 @@
 import { prisma } from "@repo/db/client";
+import { tasks } from "@repo/jobs";
+import type { broadcastNewPost } from "@repo/jobs/tasks/post/broadcast";
 import { Button } from "@repo/ui/components/button";
 import { useAppForm } from "@repo/ui/components/form";
 import { postUpdateSchema } from "@repo/validators/post";
@@ -14,16 +16,12 @@ import { formOpts, PostForm } from "~/components/forms/post-form";
 import { authenticated } from "~/lib/auth-server";
 import type { Route } from "./+types/$id";
 
-import {tasks} from '@repo/jobs';
-import type { broadcastNewPost } from "@repo/jobs/tasks/post/broadcast";
-
 export function meta() {
   return [
     { title: "Posts - Newsletter Dashboard" },
     { name: "description", content: "Manage your newsletter posts" },
   ];
 }
-
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const user = await authenticated(request.headers);
@@ -105,18 +103,19 @@ export async function action({ request, params }: Route.ActionArgs) {
           validatedData.scheduling === "schedule-later"
             ? new Date(validatedData.scheduledAt || "")
             : validatedData.scheduling === "publish-now"
-              ? existingPost.publishedAt ?? new Date()
+              ? (existingPost.publishedAt ?? new Date())
               : null,
         updatedAt: new Date(),
       },
     });
 
-    
-    if (validatedData.scheduling === "publish-now" && updatedPost.publishedAt !== existingPost.publishedAt) {
-      await tasks.trigger<typeof broadcastNewPost>(
-        "broadcast-new-post",
-        { postId: updatedPost.id },
-      );
+    if (
+      validatedData.scheduling === "publish-now" &&
+      updatedPost.publishedAt !== existingPost.publishedAt
+    ) {
+      await tasks.trigger<typeof broadcastNewPost>("broadcast-new-post", {
+        postId: updatedPost.id,
+      });
     }
   } catch (e) {
     if (e instanceof ServerValidateError) {
@@ -157,7 +156,8 @@ export default function PostsEdit() {
           >
             <form.Subscribe
               selector={(state) => ({
-                scheduling: state.values.scheduling ?? initialFormState.values.scheduling,
+                scheduling:
+                  state.values.scheduling ?? initialFormState.values.scheduling,
                 isSubmitting: state.isSubmitting,
                 canSubmit: state.canSubmit,
               })}
