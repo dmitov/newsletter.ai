@@ -9,11 +9,6 @@ await jiti.import("./app/env");
 
 export default {
   ssr: true,
-  routeDiscovery: {
-    mode: "initial",
-  },
-  future: {
-    unstable_middleware: true,
-  },
+
   presets: [vercelPreset()],
 } satisfies Config;

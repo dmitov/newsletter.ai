@@ -4,8 +4,8 @@ import { format } from "@repo/utils/date";
 import { Plus } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
-import { authMiddleware } from "~/lib/auth-middleware";
 import type { Route } from "./+types";
+import { authenticated } from "~/lib/auth-server";
 
 export function meta() {
   return [
@@ -14,14 +14,16 @@ export function meta() {
   ];
 }
 
-export const unstable_middleware: Route.unstable_MiddlewareFunction[] = [
-  authMiddleware,
-];
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const user = await authenticated(request.headers);
+
   const posts = await prisma.post.findMany({
     orderBy: {
       publishedAt: "desc",
+    },
+    where: {
+      userId: user.user.id,
     },
   });
 

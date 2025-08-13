@@ -11,8 +11,7 @@ import {
 import { Form, redirect, useActionData, useLoaderData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
 import { formOpts, PostForm } from "~/components/forms/post-form";
-import { userContext } from "~/context";
-import { authMiddleware } from "~/lib/auth-middleware";
+import { authenticated } from "~/lib/auth-server";
 import type { Route } from "./+types/$id";
 
 import {tasks} from '@repo/jobs';
@@ -25,12 +24,10 @@ export function meta() {
   ];
 }
 
-export const unstable_middleware: Route.unstable_MiddlewareFunction[] = [
-  authMiddleware,
-];
 
-export async function loader({ params, context }: Route.LoaderArgs) {
-  const user = context.get(userContext);
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const user = await authenticated(request.headers);
+
   const postId = params.id;
 
   const post = await prisma.post.findFirst({
@@ -69,7 +66,8 @@ const serverValidate = createServerValidate({
   onServerValidate: postUpdateSchema,
 });
 
-export async function action({ request, params, context }: Route.ActionArgs) {
+export async function action({ request, params }: Route.ActionArgs) {
+  const user = await authenticated(request.headers);
   const formData = await request.formData();
   const postId = params.id;
 
@@ -79,7 +77,6 @@ export async function action({ request, params, context }: Route.ActionArgs) {
 
   try {
     const validatedData = await serverValidate(formData);
-    const user = context.get(userContext);
 
     const existingPost = await prisma.post.findFirst({
       where: {

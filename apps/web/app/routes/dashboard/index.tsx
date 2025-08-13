@@ -1,8 +1,15 @@
+import { authenticated } from "~/lib/auth-server";
+import type { Route } from "./+types";
+
 export function meta() {
   return [
     { title: "Newsletter Dashboard" },
     { name: "description", content: "Dashboard for managing your newsletter" },
   ];
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+  await authenticated(request.headers);
 }
 
 export default function Dashboard() {

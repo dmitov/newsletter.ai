@@ -11,9 +11,8 @@ import {
 import { Form, redirect, useActionData } from "react-router";
 import { DashboardHeader } from "~/components/dashboard/header";
 import { formOpts, PostForm } from "~/components/forms/post-form";
-import { userContext } from "~/context";
-import { authMiddleware } from "~/lib/auth-middleware";
 import type { Route } from "./+types";
+import { authenticated } from "~/lib/auth-server";
 
 export function meta() {
   return [
@@ -22,10 +21,6 @@ export function meta() {
   ];
 }
 
-export const unstable_middleware: Route.unstable_MiddlewareFunction[] = [
-  authMiddleware,
-];
-
 const serverValidate = createServerValidate({
   ...formOpts,
   // @ts-expect-error - Find a way to optionally require field
@@ -33,13 +28,12 @@ const serverValidate = createServerValidate({
   onServerValidate: postCreateSchema,
 });
 
-export async function action({ request, context }: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
+  const user = await authenticated(request.headers);
   const formData = await request.formData();
 
   try {
     const validatedData = await serverValidate(formData);
-
-    const user = context.get(userContext);
 
     await prisma.post.create({
       data: {
@@ -85,7 +79,7 @@ export default function PostsCreate() {
     },
     validationLogic: revalidateLogic(),
     transform: useTransform(
-      (baseForm) =>mergeForm(baseForm, actionData ?? initialFormState),
+      (baseForm) => mergeForm(baseForm, actionData ?? initialFormState),
       [actionData],
     ),
   });
@@ -100,7 +94,8 @@ export default function PostsCreate() {
           >
             <form.Subscribe
               selector={(state) => ({
-                scheduling: state.values.scheduling ?? initialFormState.values.scheduling,
+                scheduling:
+                  state.values.scheduling ?? initialFormState.values.scheduling,
                 isSubmitting: state.isSubmitting,
                 canSubmit: state.canSubmit,
               })}
