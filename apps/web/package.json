@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean": "git clean -xdf .cache .turbo .react-router build node_modules",
     "build": "pnpm with-env react-router build",
     "dev": "pnpm with-env react-router dev",
     "lint": "biome check .",
@@ -16,6 +17,7 @@
     "@react-router/serve": "^7.7.1",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/email": "workspace:*",
     "@repo/jobs": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
@@ -37,6 +39,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
+    "@vercel/react-router": "^1.2.2",
     "dotenv-cli": "catalog:",
     "tailwindcss": "^4.1.4",
     "typescript": "catalog:",

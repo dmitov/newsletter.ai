@@ -7,8 +7,12 @@
     "clean": "turbo run clean",
     "db:migrate": "pnpm --filter @repo/db run migrate",
     "db:studio": "pnpm --filter @repo/db run studio",
+    "jobs:deploy": "pnpm --filter @repo/jobs run deploy",
     "format-and-lint": "biome check .",
     "format-and-lint:fix": "biome check . --write"
+  },
+  "prisma": {
+    "schema": "packages/db/prisma/schema.prisma"
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.4",
@@ -18,6 +22,6 @@
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   }
 }

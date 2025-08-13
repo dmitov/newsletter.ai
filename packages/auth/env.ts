@@ -5,7 +5,6 @@ export function authEnv() {
   return createEnv({
     clientPrefix: "VITE_",
     server: {
-      APP_URL: z.string().min(1),
       AUTH_GITHUB_ID: z.string().min(1),
       AUTH_GITHUB_SECRET: z.string().min(1),
       AUTH_SECRET:
@@ -17,7 +16,6 @@ export function authEnv() {
     },
     client: {},
     runtimeEnv: {
-      APP_URL: process.env.APP_URL,
       AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
       AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
       AUTH_SECRET: process.env.AUTH_SECRET,

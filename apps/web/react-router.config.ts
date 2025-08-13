@@ -1,4 +1,5 @@
 import type { Config } from "@react-router/dev/config";
+import { vercelPreset } from "@vercel/react-router/vite";
 import { createJiti } from "jiti";
 
 const jiti = createJiti(import.meta.url);
@@ -14,4 +15,5 @@ export default {
   future: {
     unstable_middleware: true,
   },
+  presets: [vercelPreset()],
 } satisfies Config;

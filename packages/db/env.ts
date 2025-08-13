@@ -8,6 +8,8 @@ export function dbEnv() {
       DATABASE_URL: z.string().min(1),
     },
     client: {},
-    runtimeEnv: {},
+    runtimeEnv: {
+      DATABASE_URL: process.env.DATABASE_URL,
+    },
   });
 }

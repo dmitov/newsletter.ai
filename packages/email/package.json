@@ -6,7 +6,6 @@
   "exports": {
     "./env": "./env.ts",
     "./emails/*": "./emails/*.tsx",
-    "./locales": "./locales/index.ts",
     "./render": "./render.ts",
     "./client": "./client.ts"
   },
@@ -16,7 +15,6 @@
     "format": "biome format --write .",
     "typecheck": "tsc --noEmit",
     "dev": "email dev -p 3003",
-    "build": "email build",
     "start": "email start"
   },
   "dependencies": {

@@ -1,8 +1,10 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod/v4";
+import { dbEnv } from "@repo/db/env";
 
 export function jobsEnv() {
   return createEnv({
+    extends: [dbEnv()],
     clientPrefix: "_UNUSED",
     server: {
       TRIGGER_PROJECT_ID: z.string().min(1),
