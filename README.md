@@ -17,6 +17,7 @@ A take-home assignment for a job interview project.
 
 ## Demo
 The live demo is available here: [https://newsletter-ai-web.vercel.app/](https://newsletter-ai-web.vercel.app/)
+> Note: The app lacks loading states here and there. For example authenticating with GitHub takes some time and no loader is shown.
 
 ## Project structure
 - `./apps/web` – React Router v7 app responsible for the front-end website and API
@@ -67,7 +68,7 @@ Answer to the question "What were some of the reasons you chose the technology s
 - **API authentication** – A great technical challenge and essential for production readiness.
     - When: Just before product launch.
 
-- **UI/UX improvements** – Strong design builds trust and retention. I’d revisit layout, spacing, accessibility, and overall visual hierarchy. 
+- **UI/UX improvements** – Strong design builds trust and retention. I’d revisit layout, spacing, accessibility, and overall visual hierarchy. Loading are also a must-have.
     - When: Post-launch, after gathering initial user feedback.
 
 - **More features features** – (eg. Image support)
